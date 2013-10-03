@@ -1,6 +1,10 @@
+!zenilib/assets
+!zenilib/jni
 !zenilib/assets/
+!zenilib/jni/
 !zenilib/jni/application
 !zenilib/assets/*
+!zenilib/jni/application/
 !zenilib/jni/application/*
 /*
 
