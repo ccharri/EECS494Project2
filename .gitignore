@@ -1,3 +1,7 @@
+*.DS_Store
+Thumbs.db
+
+
 !zenilib/assets
 !zenilib/jni
 !zenilib/assets/
@@ -6,5 +10,5 @@
 !zenilib/assets/*
 !zenilib/jni/application/
 !zenilib/jni/application/*
-/*
+
 
