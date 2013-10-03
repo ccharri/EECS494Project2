@@ -26,5 +26,5 @@ void Enemy::doLogic(float timestep, Game_Object* player)
     
     Point2f playerPos = player->getRealPosition();
     Point2f selfPos = getRealPosition();
-    setTheta(atan2(playerPos.x - selfPos.x, playerPos.y - selfPos.y) - M_PI_2);
+    setTheta(atan2(playerPos.x - selfPos.x, playerPos.y - selfPos.y) - Global::pi_over_two);
 }

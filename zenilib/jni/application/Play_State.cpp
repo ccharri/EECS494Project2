@@ -135,7 +135,7 @@ void Play_State::on_mouse_motion(const SDL_MouseMotionEvent &event)
     Point2f world_coordinate = m_projector.unproject(Point2f(event.x, event.y));
     Point2f playerPos = player.getRealPosition();
     Vector2f playerSize = player.getSize();
-    float theta = atan2(world_coordinate.x - playerPos.x - .5*playerSize.x, world_coordinate.y - playerPos.y - .5*playerSize.y) - M_PI_2;
+    float theta = atan2(world_coordinate.x - playerPos.x - .5*playerSize.x, world_coordinate.y - playerPos.y - .5*playerSize.y) - Global::pi_over_two;
     player.setTheta(theta);
     cursor.setPosition(world_coordinate - .5 * cursor.getSize());
     cursor.setTheta(theta);
