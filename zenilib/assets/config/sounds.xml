@@ -28,4 +28,25 @@ HOWTO:  To convert between types, or to downmix to mono,
   <hello_world>
     <filepath>sfx/104469__dkmedic__world</filepath>
   </hello_world>
+  <close_scare>
+    <filepath>sfx/30354__nurykabe__bruit-qui-fait-peur</filepath>
+  </close_scare>
+  <far_scare>
+    <filepath>sfx/8891__patchen__0-stabscrapes</filepath>
+  </far_scare>
+  <medium_scare>
+    <filepath>sfx/8923__patchen__big-stab</filepath>
+  </medium_scare>
+  <door_close>
+    <filepath>sfx/Door_Close</filepath>
+  </door_close>
+  <stone_slide>
+    <filepath>sfx/Stone_Slide</filepath>
+  </stone_slide>
+  <menu_loop>
+    <filepath>sfx/22698__dj-chronos__loop-2</filepath>
+  </menu_loop>
+  <loss>
+    <filepath>sfx/65915__bristolstories__reverse-clang2_short</filepath>
+  </loss>
 </Sounds>

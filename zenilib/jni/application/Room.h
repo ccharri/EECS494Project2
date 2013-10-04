@@ -16,6 +16,7 @@
 #include "Square.h"
 #include "Door.h"
 
+class Room_Manager;
 class Game_Object;
 class Player;
 
@@ -25,6 +26,7 @@ public:
     Room(const Zeni::Point2f& position_, const Zeni::Vector2f& size_) : random_generator(Zeni::Random()), position(position_), size(size_), hasDoorNorth(false), hasDoorEast(false), hasDoorSouth(false), hasDoorWest(false)
     {};
     
+	virtual Zeni::Point2f getRealPosition() const;
     virtual inline const Zeni::Point2f& getPosition() const {return position;};
     virtual inline const Zeni::Vector2f& getSize() const {return size;};
     
@@ -50,12 +52,10 @@ public:
             }
         }
     };
+	
+	//Allow Room_Manager to manipulate rooms
+	friend class Room_Manager;
 
-	virtual Door* addDoorNorth();
-	virtual Door* addDoorEast();
-	virtual Door* addDoorSouth();
-	virtual Door* addDoorWest();
-    
 protected:
 	Zeni::Random random_generator;
 
@@ -68,10 +68,10 @@ protected:
 	virtual bool canAddDoorEast() {return !hasDoorEast;};
 	virtual bool canAddDoorSouth() {return !hasDoorSouth;};
 	virtual bool canAddDoorWest() {return !hasDoorWest;};
-	//virtual Door* addDoorNorth() {return nullptr;};
-	//virtual Door* addDoorEast() {return nullptr;};
-	//virtual Door* addDoorSouth() {return nullptr;};
-	//virtual Door* addDoorWest() {return nullptr;};
+	virtual Door* addDoorNorth();
+	virtual Door* addDoorEast();
+	virtual Door* addDoorSouth();
+	virtual Door* addDoorWest();
 
 	bool hasDoorNorth;
 	bool hasDoorEast;

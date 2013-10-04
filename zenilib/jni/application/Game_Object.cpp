@@ -30,8 +30,8 @@ bool Game_Object::collide(const Game_Object &rhs) const {
 
 Point2f Game_Object::getRealPosition() const
 {
-    Point2f ownRoomPos = square->getRoom()->getPosition();
-    return Point2f(ownRoomPos.x +  (square->getPosition().x * square->getSize().x) + m_position.x, ownRoomPos.y + (square->getPosition().y * square->getSize().y) + m_position.y);
+    Point2f squarePos = square->getRealPosition();
+    return Point2f(squarePos.x + m_position.x, squarePos.y + m_position.y);
 }
 
 void Game_Object::doLogic(float timestep, Game_Object* player)

@@ -18,7 +18,7 @@ using namespace std;
 
 Zeni::Point2f Square::getRealPosition() const
 {
-    Point2f roomPos = room->getPosition();
+    Point2f roomPos = room->getRealPosition();
     return Point2f(roomPos.x + (position.x * size.x), roomPos.y + (position.y * size.y));
 }
 

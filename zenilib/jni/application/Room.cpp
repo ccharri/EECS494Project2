@@ -21,6 +21,11 @@
 using namespace Zeni;
 using namespace std;
 
+Point2f Room::getRealPosition() const
+{
+	return Point2f(position.x * size.x * squares[0][0]->getSize().x, position.y * size.y * squares[0][0]->getSize().y);
+}
+
 void Room::removeObject(Game_Object* object_)
 {
     auto it = find(objects.begin(), objects.end(), object_);

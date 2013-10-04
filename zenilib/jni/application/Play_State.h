@@ -20,6 +20,7 @@
 #include "Pathfinding.h"
 #include "cheats.h"
 
+class Room_Manager;
 class Room;
 
 class Play_State : public Zeni::Gamestate_Base {
@@ -53,11 +54,11 @@ private:
     
     std::vector<Room*> rooms;
     
-    Player player;
-    Statue enemy_Statue_1;
-    Ghost enemy_Ghost_1;
+    Player* player;
     
     Cursor cursor;
+
+	Room_Manager* room_manager;
     
     bool m_north;
     bool m_south;

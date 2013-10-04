@@ -16,9 +16,6 @@
 #include "Door.h"
 #include "Room.h"
 
-using namespace Zeni;
-using namespace std;
-
 class Room_Square_Filled : public Room
 {
 public:
