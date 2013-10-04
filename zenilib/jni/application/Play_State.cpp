@@ -12,15 +12,24 @@
 
 #include "Room.h"
 #include "Room_Square.h"
+#include "Room_Square_Filled.h"
+#include "Room_Hall.h"
 
 using namespace Zeni;
 using namespace std;
 
-Play_State::Play_State() :  m_time_passed(0.0), screenSize(Point2f(800, 600.0f)), player(Player(Point2f(0, 0))), enemy_Statue_1(Statue(Point2f(4,4))), enemy_Ghost_1(Ghost(Point2f(6,6))),  cursor(Cursor()), m_north(false), m_south(false), m_west(false), m_east(false)
+Play_State::Play_State() :  m_time_passed(0.0), screenSize(Point2f(800, 600.0f)), 
+							player(Player(Point2f(0, 0))), enemy_Statue_1(Statue(Point2f(4,4))), enemy_Ghost_1(Ghost(Point2f(5,5))),  
+							cursor(Cursor()), 
+							m_north(false), m_south(false), m_west(false), m_east(false)
 {
     set_pausable(true);
     
-    Room* testRoom =new Room_Square(Vector2f(), Vector2f(10, 10));
+    Room* testRoom =new Room_Square_Filled(Vector2f(), Vector2f(9, 9));
+	testRoom->addDoorNorth();
+	testRoom->addDoorEast();
+	testRoom->addDoorWest();
+	testRoom->addDoorSouth();
     testRoom->addObject(&player);
     testRoom->addObject(&enemy_Statue_1);
     testRoom->addObject(&enemy_Ghost_1);
@@ -42,7 +51,7 @@ Play_State::Play_State() :  m_time_passed(0.0), screenSize(Point2f(800, 600.0f))
                 enemy_Statue_1.setSquare(square);
             }
             
-            if((square->getPosition().x == 6) && (square->getPosition().y == 6))
+            if((square->getPosition().x == 5) && (square->getPosition().y == 5))
             {
                 square->addObject(&enemy_Ghost_1);
                 enemy_Ghost_1.setSquare(square);

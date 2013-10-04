@@ -18,6 +18,7 @@
 #include "Statue.h"
 #include "Ghost.h"
 #include "Pathfinding.h"
+#include "cheats.h"
 
 class Room;
 

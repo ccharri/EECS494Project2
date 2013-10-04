@@ -55,6 +55,8 @@ public:
     
     virtual inline const bool canMove() const {return moveable;};
     virtual inline void setMoveable(bool moveable_) {moveable = moveable_;};
+
+	virtual void stopMovement();
     
     virtual bool collide(const Game_Object &rhs) const;
     
@@ -84,7 +86,6 @@ protected:
     bool moveable;
     
     void doMovement(float timestep);
-    void stopMovement();
 };
 
 #endif /* defined(__game__Game_Object__) */

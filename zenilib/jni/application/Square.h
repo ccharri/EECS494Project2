@@ -22,7 +22,7 @@ class Player;
 class Square
 {
 public:
-    Square(const Zeni::Point2f position_, const Zeni::Vector2f size_ = Zeni::Vector2f(32, 32), bool pathable_ = true) : position(position_), size(size_), north(nullptr), south(nullptr), east(nullptr), west(nullptr), pathable(pathable_), visible(false) {};
+    Square(const Zeni::Point2f position_, const Zeni::Vector2f size_ = Zeni::Vector2f(32, 32), float theta_ = 0, bool pathable_ = true) : position(position_), size(size_), theta(theta_), north(nullptr), south(nullptr), east(nullptr), west(nullptr), pathable(pathable_), visible(false) {};
     
     inline const Zeni::Point2f& getPosition() const {return position;};
     Zeni::Point2f getRealPosition() const;
@@ -55,6 +55,8 @@ public:
     
     virtual void render(Player* player) const;
     virtual void doLogic(float timestep);
+
+	virtual void replaceConnections(Square* square_);
     
     virtual ~Square() {};
     
@@ -63,7 +65,8 @@ private:
     //
     Zeni::Point2f position;
     Zeni::Vector2f size;
-    
+    float theta;
+
     Room* room;
     
     Square* north;

@@ -6,12 +6,14 @@
 //
 //
 
-#include "Room_Square.h"
+#include "Room_Square_Filled.h"
+
+#include "Square.h"
 
 using namespace std;
 using namespace Zeni;
 
-Room_Square::Room_Square(const Point2f position_, const Vector2f size_)
+Room_Square_Filled::Room_Square_Filled(const Point2f position_, const Vector2f size_)
 	: Room(position_, size_)
 {
 	vector<vector<Square*> > squares;
@@ -36,6 +38,11 @@ Room_Square::Room_Square(const Point2f position_, const Vector2f size_)
 				{
 					square->setPathable(false);
 				}
+
+				if(( x >= ((size_.x - 1)/2.) - 1) && ( x <= ((size_.x - 1)/2.) + 1) && (y >= ((size_.y - 1)/2.) - 1) && ( y <= ((size_.y - 1)/2.) + 1))
+				{
+					square->setPathable(false);
+				}
 			}
 			else {
 				square->setPathable(false);
@@ -48,6 +55,11 @@ Room_Square::Room_Square(const Point2f position_, const Vector2f size_)
 				square->setNorth(north);
 
 				if(y == (size_.y -1))
+				{
+					square->setPathable(false);
+				}
+
+				if(( x >= ((size_.x - 1)/2.) - 1) && ( x <= ((size_.x - 1)/2.) + 1) && (y >= ((size_.y - 1)/2.) - 1) && ( y <= ((size_.y - 1)/2.) + 1))
 				{
 					square->setPathable(false);
 				}

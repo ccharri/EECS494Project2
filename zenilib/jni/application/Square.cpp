@@ -11,6 +11,8 @@
 #include "Room.h"
 #include "Player.h"
 
+#include "cheats.h"
+
 using namespace Zeni;
 using namespace std;
 
@@ -37,14 +39,14 @@ void Square::render(Player* player) const
     String texture = pathable ? "brick" : "wall";
     
     Point2f playerPos = player->getRealPosition();
-    float alpha = 1.2- (Vector2f(playerPos.x - startPos.x, playerPos.y - startPos.y).magnitude() / (player->getLightDist() * size.x));
+    float alpha = see_all ? 1 : 1.2- (Vector2f(playerPos.x - startPos.x, playerPos.y - startPos.y).magnitude() / (player->getLightDist() * size.x));
     Color fadeout = Color(alpha, 1, 1, 1);
     
     render_image(
          texture, // which texture to use
          startPos, // upper-left corner
          endPos, // lower-right corner
-         0, // rotation in radians
+         theta, // rotation in radians
          1.0f, // scaling factor
          startPos + 0.5f * size, // point to rotate & scale about
          false, // whether or not to horizontally flip the texture
@@ -54,6 +56,18 @@ void Square::render(Player* player) const
 
 void Square::doLogic(float timestep)
 {
+}
+
+void Square::replaceConnections(Square* square_)
+{
+	setNorth(square_->getNorth());
+	if(north) north->setSouth(this);
+	setSouth(square_->getSouth());
+	if(south) south->setNorth(this);
+	setEast(square_->getEast());
+	if(east) east->setWest(this);
+	setWest(square_->getWest());
+	if(west) west->setEast(this);
 }
 
 bool Square::isPathable() const

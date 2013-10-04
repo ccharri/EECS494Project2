@@ -13,6 +13,10 @@
 #include <zenilib.h>
 
 #include "Player.h"
+#include "Enemy.h"
+#include "Door.h"
+
+#include "cheats.h"
 
 using namespace Zeni;
 using namespace std;
@@ -22,6 +26,35 @@ void Room::removeObject(Game_Object* object_)
     auto it = find(objects.begin(), objects.end(), object_);
 
     if(it != objects.end()) objects.erase(it);
+}
+
+void Room::randomizeEnemies()
+{
+	for(Game_Object* object : objects)
+	{
+		Enemy* enemy = dynamic_cast<Enemy*>(object);
+
+		if(!enemy) continue;
+
+		bool locationFound = false;
+
+		while(!locationFound)
+		{
+			int x = random_generator.rand_lt(getSize().x);
+			int y = random_generator.rand_lt(getSize().y);
+
+			Square* square = squares[x][y];
+			if(!square->isPathable()) continue;
+			if(dynamic_cast<Door*>(square)) continue;
+
+			Square* oldsquare = enemy->getSquare();
+			oldsquare->removeObject(enemy);
+			square->addObject(enemy);
+			enemy->setSquare(square);
+			enemy->stopMovement();
+			locationFound = true;
+		}
+	}
 }
 
 void Room::render(Player* player) const
@@ -66,7 +99,7 @@ void Room::doLogic(float timestep, Player* player)
             float angle = atan2((squarePos.y - playerPos.y),(squarePos.x - playerPos.x));
             bool inAngle = (angle >= angleMin) && (angle <= angleMax);
             
-            if((player->isLightOn()) && !(square == player->getSquare()) && ((distance <= (player->getLightDist() * player->getSquare()->getSize().x)) && (inAngle)))
+            if(see_all ||( (player->isLightOn()) && !(square == player->getSquare()) && ((distance <= (player->getLightDist() * player->getSquare()->getSize().x)) && (inAngle))))
             {
                 square->setVisible(true);
             }
@@ -80,4 +113,68 @@ void Room::doLogic(float timestep, Player* player)
     {
         object->doLogic(timestep, player);
     }
+}
+
+Door* Room::addDoorNorth() 
+{
+	Vector2f location = Vector2f((int)((getSize().x -1) /2.), 0);
+
+	if(hasDoorNorth) return static_cast<Door*>(squares[location.x][location.y]);
+
+	Door* newDoor = new Door(location);
+	Square* oldSquare = squares[location.x][location.y];
+	newDoor->replaceConnections(oldSquare);
+	delete squares[location.x][location.y];
+	squares[location.x][location.y] = newDoor;
+	newDoor->setRoom(this);
+	hasDoorNorth = true;
+	return newDoor;
+}
+
+Door* Room::addDoorEast() 
+{
+	Vector2f location = Vector2f((int)(getSize().x-1.), (int)((getSize().y -1) /2.));
+
+	if(hasDoorEast) return static_cast<Door*>(squares[location.x][location.y]);
+
+	Door* newDoor = new Door(location);
+	Square* oldSquare = squares[location.x][location.y];
+	newDoor->replaceConnections(oldSquare);
+	delete squares[location.x][location.y];
+	squares[location.x][location.y] = newDoor;
+	newDoor->setRoom(this);
+	hasDoorEast = true;
+	return newDoor;
+}
+
+Door* Room::addDoorSouth() 
+{
+	Vector2f location = Vector2f((int)((getSize().x -1) /2.), (int)(getSize().y - 1));
+
+	if(hasDoorSouth) return static_cast<Door*>(squares[location.x][location.y]);
+
+	Door* newDoor = new Door(location);
+	Square* oldSquare = squares[location.x][location.y];
+	newDoor->replaceConnections(oldSquare);
+	delete squares[location.x][location.y];
+	squares[location.x][location.y] = newDoor;
+	newDoor->setRoom(this);
+	hasDoorSouth = true;
+	return newDoor;
+}
+
+Door* Room::addDoorWest() 
+{
+	Vector2f location = Vector2f(0, (int)(getSize().y -1) /2.);
+
+	if(hasDoorWest) return static_cast<Door*>(squares[location.x][location.y]);
+
+	Door* newDoor = new Door(location);
+	Square* oldSquare = squares[location.x][location.y];
+	newDoor->replaceConnections(oldSquare);
+	delete squares[location.x][location.y];
+	squares[location.x][location.y] = newDoor;
+	newDoor->setRoom(this);
+	hasDoorWest = true;
+	return newDoor;
 }
