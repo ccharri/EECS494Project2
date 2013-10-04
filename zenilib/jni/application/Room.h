@@ -35,7 +35,7 @@ public:
     virtual inline const std::vector<Game_Object*>& getObjects() const {return objects;};
     virtual void removeObject(Game_Object* object_);
 
-	virtual void randomizeEnemies();
+	virtual void randomizeEnemies(Player* playeR_);
     
     virtual inline const std::vector<std::vector<Square*> >& getSquares() const {return squares;};
     virtual inline const std::vector<Door*>& getDoors() const {return doors;};
@@ -61,8 +61,6 @@ protected:
 
     void setSquares(const std::vector<std::vector<Square*> >& squares_) {
 		squares = squares_;
-		
-		randomizeEnemies();
 	};
     inline void addDoor(Door* door_) {doors.push_back(door_);};
 

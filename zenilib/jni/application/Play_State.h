@@ -53,8 +53,6 @@ private:
     void do_player_movement(float time_step);
     void end_game(bool loss);
     void check_and_play_music();
-
-    const std::vector<Room*>* rooms;
     
     Player* player;
     

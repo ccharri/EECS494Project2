@@ -27,6 +27,8 @@ public:
     
     ~Enemy() {};
     
+    inline bool isEnemy() const {return true;};
+    
 protected:
 	Zeni::Chronometer<Zeni::Time> last_seen_timer;
 	Zeni::Chronometer<Zeni::Time> movement_sound_timer;

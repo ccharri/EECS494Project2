@@ -17,12 +17,16 @@ using namespace std;
 
 void Statue::render() const
 {
+    if(!square) return;
+    
     if(getSquare()->isVisible())
         Enemy::render("statue");
 }
 
 void Statue::doLogic(float timestep, Game_Object* player)
 {
+    if(!square) return;
+    
 	bool seen = seen_last_frame;
 
     if(!getSquare()->isVisible())

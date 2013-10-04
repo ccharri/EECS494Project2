@@ -24,22 +24,12 @@ Play_State::Play_State() :  m_time_passed(0.0), screenSize(Point2f(800, 600.0f))
     set_pausable(true);
 
 	room_manager = new Room_Manager(9, 5);
-
-	rooms = &room_manager->getRooms();
-
+    
 	player = room_manager->getPlayer();
     
     Room* playerRoom = player->getSquare()->getRoom();
     
     vector<Game_Object*> roomObjects = playerRoom->getObjects();
-    
-    for(Game_Object* object : roomObjects)
-    {
-        if(dynamic_cast<Enemy*>(object))
-        {
-            object->setPath(AStar(object->getSquare(), player->getSquare()));
-        }
-    }
     
     m_end_timer.stop();
 
@@ -123,7 +113,7 @@ void Play_State::render()
     
 	if(see_all)
 	{
-		for_each(rooms->begin(), rooms->end(), [&](Room* room) {
+		for_each(room_manager->getRooms().begin(), room_manager->getRooms().end(), [&](Room* room) {
 			room->render(player);
 		});
 	}
@@ -144,12 +134,9 @@ void Play_State::perform_logic() {
 
     m_projector = Projector2D(make_pair(player->getRealPosition() - .5 * screenSize, player->getRealPosition() + .5 * screenSize), get_Video().get_viewport());
     
-    
-    const vector<Game_Object*>& roomObjects = player->getSquare()->getRoom()->getObjects();
-    
-    for(Game_Object* object : roomObjects)
+    for(Game_Object* object : player->getSquare()->getRoom()->getObjects())
     {
-        if(dynamic_cast<Enemy*>(object))
+        if(object && object->isEnemy())
         {
             if(object->collide(*player))
             {
@@ -190,10 +177,10 @@ void Play_State::perform_logic() {
 
 		if(playerSquare->getRoom() != newPlayerSquare->getRoom())
 		{
-			newPlayerSquare->getRoom()->randomizeEnemies();
+			newPlayerSquare->getRoom()->randomizeEnemies(player);
 		}
 
-        for(Game_Object* object : roomObjects)
+        for(Game_Object* object : player->getSquare()->getRoom()->getObjects())
         {
             if(dynamic_cast<Enemy*>(object))
             {

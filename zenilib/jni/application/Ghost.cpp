@@ -17,12 +17,16 @@ using namespace std;
 
 void Ghost::render() const
 {
+    if(!square) return;
+    
     if(!getSquare()->isVisible())
         Enemy::render("ghost");
 }
 
 void Ghost::doLogic(float timestep, Game_Object* player)
 {
+    if(!square) return;
+    
     if(!getSquare()->isVisible())
         Enemy::doLogic(timestep, player);
 }

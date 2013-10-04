@@ -30,6 +30,7 @@ bool Game_Object::collide(const Game_Object &rhs) const {
 
 Point2f Game_Object::getRealPosition() const
 {
+    if(!square) return Point2f();
     Point2f squarePos = square->getRealPosition();
     return Point2f(squarePos.x + m_position.x, squarePos.y + m_position.y);
 }

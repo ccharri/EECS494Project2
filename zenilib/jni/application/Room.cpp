@@ -57,36 +57,33 @@ void Room::removeObject(Game_Object* object_)
     if(it != objects.end()) objects.erase(it);
 }
 
-void Room::randomizeEnemies()
+void Room::randomizeEnemies(Player* player_)
 {
-	for(Game_Object* object : objects)
-	{
-		Enemy* enemy = dynamic_cast<Enemy*>(object);
-
-		if(!enemy) continue;
-
+	for_each(objects.begin(), objects.end(), [&](Game_Object* object){
+        if(object == player_ || !object || !object->isEnemy()) return;
+        
 		bool locationFound = false;
-
+        
 		while(!locationFound)
 		{
 			int x = random_generator.rand_lt(getSize().x);
 			int y = random_generator.rand_lt(getSize().y);
-
+            
 			Square* square = squares[x][y];
 			if(!square->isPathable()) continue;
-			if(dynamic_cast<Door*>(square)) continue;
-
-			Square* oldsquare = enemy->getSquare();
+            if(Vector2f(player_->getRealPosition() - square->getRealPosition()).magnitude() < 2.f) continue;
+            
+			Square* oldsquare = object->getSquare();
 			if(oldsquare)
 			{
-				oldsquare->removeObject(enemy);
+				oldsquare->removeObject(object);
 			}
-			square->addObject(enemy);
-			enemy->setSquare(square);
-			enemy->stopMovement();
+			square->addObject(object);
+			object->setSquare(square);
+			object->stopMovement();
 			locationFound = true;
 		}
-	}
+    });
 }
 
 void Room::render(Player* player) const
@@ -101,6 +98,8 @@ void Room::render(Player* player) const
     
     for(Game_Object* object : objects)
     {
+        if(!object->getSquare()) continue;
+           
         object->render();
     }
 }
@@ -141,10 +140,12 @@ void Room::doLogic(float timestep, Player* player)
         }
     }
     
-	for_each(objects.begin(), objects.end(), [&](Game_Object* object)
+	for(Game_Object* object : objects)
 	{
+        if(!object->getSquare()) continue;
+        
 		object->doLogic(timestep, player);
-	});
+	}
 }
 
 Door* Room::addDoorNorth() 
@@ -156,7 +157,7 @@ Door* Room::addDoorNorth()
 	Door* newDoor = new Door(this, location);
 	Square* oldSquare = squares[location.x][location.y];
 	newDoor->replaceConnections(oldSquare);
-	delete squares[location.x][location.y];
+	delete oldSquare;
 	squares[location.x][location.y] = newDoor;
 	hasDoorNorth = true;
 	return newDoor;
@@ -171,7 +172,7 @@ Door* Room::addDoorEast()
 	Door* newDoor = new Door(this, location);
 	Square* oldSquare = squares[location.x][location.y];
 	newDoor->replaceConnections(oldSquare);
-	delete squares[location.x][location.y];
+	delete oldSquare;
 	squares[location.x][location.y] = newDoor;
 	hasDoorEast = true;
 	return newDoor;
@@ -186,7 +187,7 @@ Door* Room::addDoorSouth()
 	Door* newDoor = new Door(this, location);
 	Square* oldSquare = squares[location.x][location.y];
 	newDoor->replaceConnections(oldSquare);
-	delete squares[location.x][location.y];
+	delete oldSquare;
 	squares[location.x][location.y] = newDoor;
 	hasDoorSouth = true;
 	return newDoor;
@@ -201,7 +202,7 @@ Door* Room::addDoorWest()
 	Door* newDoor = new Door(this, location);
 	Square* oldSquare = squares[location.x][location.y];
 	newDoor->replaceConnections(oldSquare);
-	delete squares[location.x][location.y];
+	delete oldSquare;
 	squares[location.x][location.y] = newDoor;
 	hasDoorWest = true;
 	return newDoor;

@@ -35,6 +35,8 @@ public:
     virtual void render() const;
     virtual void doLogic(float timestep, Game_Object* player);
     
+    virtual inline bool isEnemy() const {return false;};
+    
     ~Player() {};
 private:
     float light_arc;

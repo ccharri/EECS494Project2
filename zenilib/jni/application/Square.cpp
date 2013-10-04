@@ -18,7 +18,8 @@ using namespace std;
 
 Square::Square(Room* room_, const Point2f position_, const Vector2f size_, float theta_, bool pathable_) : position(position_), size(size_), theta(theta_), room(room_), north(nullptr), south(nullptr), east(nullptr), west(nullptr), pathable(pathable_), visible(false)
 {
-	Point2f startPos = getRealPosition();
+    Point2f roomPos = room->getRealPosition();
+	Point2f startPos = Point2f(roomPos.x + (position_.x * size_.x), roomPos.y + (position_.y * size_.y));
 	Point2f endPos = Point2f(startPos.x + size.x, startPos.y + size.y);
 
 	Vertex2f_Texture ul(startPos, Point2f(0.f,0.f));

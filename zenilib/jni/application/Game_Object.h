@@ -55,6 +55,8 @@ public:
     
     virtual inline const bool canMove() const {return moveable;};
     virtual inline void setMoveable(bool moveable_) {moveable = moveable_;};
+    
+    virtual inline bool isEnemy() const = 0;
 
 	virtual void stopMovement();
     
