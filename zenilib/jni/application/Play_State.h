@@ -35,6 +35,8 @@ private:
     Zeni::Chronometer<Zeni::Time> m_chrono;
     float m_time_passed;
     
+	Zeni::Chronometer<Zeni::Time> music_timer;
+
     Zeni::Chronometer<Zeni::Time> m_end_timer;
     
     Zeni::Projector2D m_projector;
@@ -51,7 +53,8 @@ private:
     
     void do_player_movement(float time_step);
     void end_game(bool loss);
-    
+    void check_and_play_music();
+
     const std::vector<Room*>* rooms;
     
     Player* player;

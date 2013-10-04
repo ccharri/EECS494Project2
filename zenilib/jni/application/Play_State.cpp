@@ -42,6 +42,8 @@ Play_State::Play_State() :  m_time_passed(0.0), screenSize(Point2f(800, 600.0f))
     }
     
     m_end_timer.stop();
+
+	play_sound("menu_loop");
 }
 
 Play_State::~Play_State()
@@ -138,6 +140,8 @@ void Play_State::perform_logic() {
     const float time_step = time_passed - m_time_passed;
     m_time_passed = time_passed;
     
+	check_and_play_music();
+
     m_projector = Projector2D(make_pair(player->getRealPosition() - .5 * screenSize, player->getRealPosition() + .5 * screenSize), get_Video().get_viewport());
     
     
@@ -231,4 +235,13 @@ void Play_State::end_game(bool loss)
     m_chrono.stop();
     play_sound("loss");
     m_end_timer.start();
+}
+
+void Play_State::check_and_play_music()
+{
+	if(music_timer.seconds() > 120)
+	{
+		play_sound("menu_loop");
+		music_timer.reset();
+	}
 }
