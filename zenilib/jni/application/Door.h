@@ -10,6 +10,7 @@
 #define __game__Door__
 
 #include <iostream>
+#include <zenilib.h>
 
 #include "Square.h"
 
@@ -18,7 +19,7 @@ class Room;
 class Door : public Square
 {
 public:
-    Door(const Zeni::Point2f position_, const Zeni::Vector2f size_ = Zeni::Vector2f(32, 32)) :  Square(position_, size_, 0, true) {};
+    Door(Room* room_, const Zeni::Point2f position_, const Zeni::Vector2f size_ = Zeni::Vector2f(32, 32)) :  Square(room_, position_, size_, 0, true) {};
     
     inline Room* getConnection() const {return connection;};
     inline void setConnection(Room* connection_) {connection = connection_;};

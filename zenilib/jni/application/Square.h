@@ -19,10 +19,12 @@
 class Room;
 class Player;
 
+static const Zeni::Vector2f SQUARE_SIZE(32.f, 32.f);
+
 class Square
 {
 public:
-    Square(const Zeni::Point2f position_, const Zeni::Vector2f size_ = Zeni::Vector2f(32, 32), float theta_ = 0, bool pathable_ = true) : position(position_), size(size_), theta(theta_), north(nullptr), south(nullptr), east(nullptr), west(nullptr), pathable(pathable_), visible(false) {};
+    Square(Room* room_, const Zeni::Point2f position_, const Zeni::Vector2f size_ = SQUARE_SIZE, float theta_ = 0, bool pathable_ = true);
     
     inline const Zeni::Point2f& getPosition() const {return position;};
     Zeni::Point2f getRealPosition() const;
@@ -79,6 +81,9 @@ private:
     
     //Should this square render?
     bool visible;
+
+	Zeni::Quadrilateral<Zeni::Vertex2f_Texture> stone;
+	Zeni::Quadrilateral<Zeni::Vertex2f_Texture> wall;
     
     //List of all game objects in this square
     std::vector<Game_Object*> objects;

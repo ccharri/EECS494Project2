@@ -23,7 +23,7 @@ using namespace std;
 
 Point2f Room::getRealPosition() const
 {
-	return Point2f(position.x * size.x * squares[0][0]->getSize().x, position.y * size.y * squares[0][0]->getSize().y);
+	return Point2f(position.x * size.x * SQUARE_SIZE.x, position.y * size.y * SQUARE_SIZE.y);
 }
 
 void Room::removeObject(Game_Object* object_)
@@ -126,12 +126,11 @@ Door* Room::addDoorNorth()
 
 	if(hasDoorNorth) return static_cast<Door*>(squares[location.x][location.y]);
 
-	Door* newDoor = new Door(location);
+	Door* newDoor = new Door(this, location);
 	Square* oldSquare = squares[location.x][location.y];
 	newDoor->replaceConnections(oldSquare);
 	delete squares[location.x][location.y];
 	squares[location.x][location.y] = newDoor;
-	newDoor->setRoom(this);
 	hasDoorNorth = true;
 	return newDoor;
 }
@@ -142,12 +141,11 @@ Door* Room::addDoorEast()
 
 	if(hasDoorEast) return static_cast<Door*>(squares[location.x][location.y]);
 
-	Door* newDoor = new Door(location);
+	Door* newDoor = new Door(this, location);
 	Square* oldSquare = squares[location.x][location.y];
 	newDoor->replaceConnections(oldSquare);
 	delete squares[location.x][location.y];
 	squares[location.x][location.y] = newDoor;
-	newDoor->setRoom(this);
 	hasDoorEast = true;
 	return newDoor;
 }
@@ -158,12 +156,11 @@ Door* Room::addDoorSouth()
 
 	if(hasDoorSouth) return static_cast<Door*>(squares[location.x][location.y]);
 
-	Door* newDoor = new Door(location);
+	Door* newDoor = new Door(this, location);
 	Square* oldSquare = squares[location.x][location.y];
 	newDoor->replaceConnections(oldSquare);
 	delete squares[location.x][location.y];
 	squares[location.x][location.y] = newDoor;
-	newDoor->setRoom(this);
 	hasDoorSouth = true;
 	return newDoor;
 }
@@ -174,12 +171,11 @@ Door* Room::addDoorWest()
 
 	if(hasDoorWest) return static_cast<Door*>(squares[location.x][location.y]);
 
-	Door* newDoor = new Door(location);
+	Door* newDoor = new Door(this, location);
 	Square* oldSquare = squares[location.x][location.y];
 	newDoor->replaceConnections(oldSquare);
 	delete squares[location.x][location.y];
 	squares[location.x][location.y] = newDoor;
-	newDoor->setRoom(this);
 	hasDoorWest = true;
 	return newDoor;
 }

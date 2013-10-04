@@ -4,6 +4,6 @@
 
 static bool see_all = false;
 static bool no_die = false;
-static bool enemy_logic = false;
+static bool always_use_enemy_logic = false;
 
 #endif

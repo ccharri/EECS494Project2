@@ -25,8 +25,7 @@ Room_Square_Filled::Room_Square_Filled(const Point2f position_, const Vector2f s
 
 		for(int y = 0; y < (int)size_.y; ++y)
 		{
-			Square* square = new Square(Point2f(x,y));
-			square->setRoom(this);
+			Square* square = new Square(this, Point2f(x,y));
 
 			//Fill in left
 			if(x) {

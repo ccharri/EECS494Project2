@@ -18,8 +18,7 @@ Room_Hall::Room_Hall(const Point2f position_, const Vector2f size_)
 
 		for(int y = 0; y < (int)size_.y; ++y)
 		{
-			Square* square = new Square(Point2f(x,y));
-			square->setRoom(this);
+			Square* square = new Square(this, Point2f(x,y));
 
 			//Fill in left
 			if(x) {
