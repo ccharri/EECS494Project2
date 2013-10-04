@@ -154,28 +154,28 @@ void Room_Manager::generateRoom(Vector2f size_)
 	{
 		case 0: //North
 			{
-				newPos = Point2f(pos.x - 1, pos.y);
+				newPos = Point2f(pos.x, pos.y -1);
 				if(roomAtPosition(newPos)) return;
 				if(!room->canAddDoorNorth()) return;
 				break;
 			}
 		case 1: //East
 			{
-				newPos = Point2f(pos.x, pos.y + 1);
+				newPos = Point2f(pos.x +1, pos.y);
 				if(roomAtPosition(newPos)) return;
 				if(!room->canAddDoorEast()) return;
 				break;
 			}
 		case 2: //South
 		{
-			newPos = Point2f(pos.x + 1, pos.y);
+			newPos = Point2f(pos.x, pos.y + 1);
 			if(roomAtPosition(newPos)) return;
 			if(!room->canAddDoorSouth()) return;
 			break;
 		}
 		case 3: //West
 		{
-			newPos = Point2f(pos.x, pos.y - 1);
+			newPos = Point2f(pos.x -1, pos.y);
 			if(roomAtPosition(newPos)) return;
 			if(!room->canAddDoorWest()) return;
 			break;
@@ -203,7 +203,7 @@ bool Room_Manager::findAndCreateEndRoom(Zeni::Vector2f size_, float min_distance
 			switch(i)
 			{
 			case 0:
-				newPos = Point2f(pos.x - 1, pos.y); //north
+				newPos = Point2f(pos.x, pos.y -1); //north
 				if(room->canAddDoorNorth() && (!roomAtPosition(newPos) && (Vector2f(newPos - pos).magnitude() >= min_distance_)))
 				{
 					validPlacement = true;
@@ -211,7 +211,7 @@ bool Room_Manager::findAndCreateEndRoom(Zeni::Vector2f size_, float min_distance
 				}
 				break;
 			case 1:
-				newPos = Point2f(pos.x, pos.y + 1); //east
+				newPos = Point2f(pos.x +1, pos.y); //east
 				if(room->canAddDoorEast() && (!roomAtPosition(newPos) && (Vector2f(newPos - pos).magnitude() >= min_distance_)))
 				{
 					validPlacement = true;
@@ -219,7 +219,7 @@ bool Room_Manager::findAndCreateEndRoom(Zeni::Vector2f size_, float min_distance
 				}
 				break;
 			case 2:
-				newPos = Point2f(pos.x + 1, pos.y); //south
+				newPos = Point2f(pos.x, pos.y +1); //south
 				if(room->canAddDoorSouth() && (!roomAtPosition(newPos) && (Vector2f(newPos - pos).magnitude() >= min_distance_)))
 				{
 					validPlacement = true;
@@ -227,7 +227,7 @@ bool Room_Manager::findAndCreateEndRoom(Zeni::Vector2f size_, float min_distance
 				}
 				break;
 			case 3:
-				newPos = Point2f(pos.x, pos.y - 1); //west
+				newPos = Point2f(pos.x -1, pos.y); //west
 				if(room->canAddDoorWest() && (!roomAtPosition(newPos) && (Vector2f(newPos - pos).magnitude() >= min_distance_)))
 				{
 					validPlacement = true;

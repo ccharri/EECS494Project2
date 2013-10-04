@@ -31,7 +31,7 @@ void Square::removeObject(Game_Object* object_)
 
 void Square::render(Player* player) const
 {
-    if(!isVisible()) return;
+    if(!isVisible() && !see_all) return;
     
     Point2f startPos = getRealPosition();
     Point2f endPos = Point2f(startPos.x + size.x, startPos.y + size.y);

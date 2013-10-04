@@ -25,6 +25,8 @@ Play_State::Play_State() :  m_time_passed(0.0), screenSize(Point2f(800, 600.0f))
 
 	room_manager = new Room_Manager(9, 5);
 
+	rooms = &room_manager->getRooms();
+
 	player = room_manager->getPlayer();
     
     Room* playerRoom = player->getSquare()->getRoom();
@@ -117,7 +119,16 @@ void Play_State::render()
 {
     get_Video().set_2d(make_pair(player->getRealPosition() - .5*screenSize, player->getRealPosition() + .5* screenSize), true);
     
-    player->getSquare()->getRoom()->render(player);
+	if(see_all)
+	{
+		for_each(rooms->begin(), rooms->end(), [&](Room* room) {
+			room->render(player);
+		});
+	}
+	else
+	{
+		player->getSquare()->getRoom()->render(player);
+	}
     
     cursor.render();
 }

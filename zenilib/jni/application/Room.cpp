@@ -114,10 +114,10 @@ void Room::doLogic(float timestep, Player* player)
         }
     }
     
-    for(Game_Object* object : objects)
-    {
-        object->doLogic(timestep, player);
-    }
+	for_each(objects.begin(), objects.end(), [&](Game_Object* object)
+	{
+		object->doLogic(timestep, player);
+	});
 }
 
 Door* Room::addDoorNorth() 

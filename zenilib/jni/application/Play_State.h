@@ -52,7 +52,7 @@ private:
     void do_player_movement(float time_step);
     void end_game(bool loss);
     
-    std::vector<Room*> rooms;
+    const std::vector<Room*>* rooms;
     
     Player* player;
     
