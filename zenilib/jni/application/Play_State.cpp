@@ -33,7 +33,9 @@ Play_State::Play_State() :  m_time_passed(0.0), screenSize(Point2f(800, 600.0f))
     
     m_end_timer.stop();
 
-	play_sound("menu_loop");
+    Sound::get().set_BGM("sfx/22698__dj-chronos__loop-2");
+    Sound::get().set_BGM_looping(true);
+    Sound::get().play_BGM();
 }
 
 Play_State::~Play_State()
@@ -129,14 +131,12 @@ void Play_State::perform_logic() {
     const float time_passed = m_chrono.seconds();
     const float time_step = time_passed - m_time_passed;
     m_time_passed = time_passed;
-    
-	check_and_play_music();
 
     m_projector = Projector2D(make_pair(player->getRealPosition() - .5 * screenSize, player->getRealPosition() + .5 * screenSize), get_Video().get_viewport());
     
     for(Game_Object* object : player->getSquare()->getRoom()->getObjects())
     {
-        if(object && object->isEnemy())
+        if(object && object->isEnemy() && object->getSquare())
         {
             if(object->collide(*player))
             {
@@ -182,7 +182,7 @@ void Play_State::perform_logic() {
 
         for(Game_Object* object : player->getSquare()->getRoom()->getObjects())
         {
-            if(dynamic_cast<Enemy*>(object))
+            if(object->isEnemy() && object->getSquare())
             {
                 object->setPath(AStar(object->getSquare(), player->getSquare()));
             }
@@ -227,13 +227,4 @@ void Play_State::end_game(bool loss)
     m_chrono.stop();
     play_sound("loss");
     m_end_timer.start();
-}
-
-void Play_State::check_and_play_music()
-{
-	if(music_timer.seconds() > 120)
-	{
-		play_sound("menu_loop");
-		music_timer.reset();
-	}
 }

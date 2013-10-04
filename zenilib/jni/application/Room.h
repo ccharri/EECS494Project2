@@ -80,10 +80,11 @@ protected:
 	bool hasDoorSouth;
 	bool hasDoorWest;
     
+    std::vector<Game_Object*> objects;
+    
 private:
     Zeni::Point2f position;
     Zeni::Vector2f size;
-    std::vector<Game_Object*> objects;
     std::vector<Door*> doors;
 
 	Enemy* randomEnemy();

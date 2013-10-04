@@ -43,9 +43,6 @@ HOWTO:  To convert between types, or to downmix to mono,
   <stone_slide>
     <filepath>sfx/Stone_Slide</filepath>
   </stone_slide>
-  <menu_loop>
-    <filepath>sfx/22698__dj-chronos__loop-2</filepath>
-  </menu_loop>
   <loss>
     <filepath>sfx/65915__bristolstories__reverse-clang2_short</filepath>
   </loss>

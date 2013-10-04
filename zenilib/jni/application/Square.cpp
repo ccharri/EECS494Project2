@@ -38,6 +38,7 @@ Square::Square(Room* room_, const Point2f position_, const Vector2f size_, float
 
 Zeni::Point2f Square::getRealPosition() const
 {
+    if(!room) return Point2f(0,0);
     Point2f roomPos = room->getRealPosition();
     return Point2f(roomPos.x + (position.x * size.x), roomPos.y + (position.y * size.y));
 }
