@@ -14,12 +14,36 @@
 
 #include "Player.h"
 #include "Enemy.h"
+#include "Ghost.h"
+#include "Statue.h"
 #include "Door.h"
 
 #include "cheats.h"
 
 using namespace Zeni;
 using namespace std;
+
+Room::Room(const Zeni::Point2f& position_, const Zeni::Vector2f& size_) : random_generator(Zeni::Random()), position(position_), size(size_), hasDoorNorth(false), hasDoorEast(false), hasDoorSouth(false), hasDoorWest(false)
+{
+	int random = random_generator.rand_lt(100);
+
+	if((random >= 0)  && (random < 15))
+	{
+		addObject(randomEnemy());
+		addObject(randomEnemy());
+	}
+	else if((random >= 15)  && (random < 80))
+	{
+		addObject(randomEnemy());
+	}
+	else if((random >= 80)  && (random < 100))
+	{
+		//Relax, you're safe!
+	}
+	else {
+		assert ((random >= 0) && (random < 100));
+	}
+};
 
 Point2f Room::getRealPosition() const
 {
@@ -53,7 +77,10 @@ void Room::randomizeEnemies()
 			if(dynamic_cast<Door*>(square)) continue;
 
 			Square* oldsquare = enemy->getSquare();
-			oldsquare->removeObject(enemy);
+			if(oldsquare)
+			{
+				oldsquare->removeObject(enemy);
+			}
 			square->addObject(enemy);
 			enemy->setSquare(square);
 			enemy->stopMovement();
@@ -178,4 +205,23 @@ Door* Room::addDoorWest()
 	squares[location.x][location.y] = newDoor;
 	hasDoorWest = true;
 	return newDoor;
+}
+
+Enemy* Room::randomEnemy()
+{
+	int random = random_generator.rand_lt(100);
+
+	if((random >= 0) && (random < 60))
+	{
+		return new Statue(Point2f(0,0));
+	}
+	else if ((random >= 70) && (random < 100))
+	{
+		return new Ghost(Point2f(0,0));
+	}
+	else
+	{
+		assert((random >= 0) && (random < 100));
+	}
+
 }

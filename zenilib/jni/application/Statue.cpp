@@ -23,6 +23,31 @@ void Statue::render() const
 
 void Statue::doLogic(float timestep, Game_Object* player)
 {
+	bool seen = seen_last_frame;
+
     if(!getSquare()->isVisible())
         Enemy::doLogic(timestep, player);
+
+	if(isMoving() && !square->isVisible())
+	{
+		check_and_play_sound_move("stone_slide");
+	}
+
+	bool should_play_visibility_sound = !seen_last_frame && square->isVisible();
+	float distance_from_player = Vector2f(player->getRealPosition() - getRealPosition()).magnitude();
+
+	if(!should_play_visibility_sound) return;
+
+	if(distance_from_player <= (1.5 * SQUARE_SIZE.x))
+	{
+		check_and_play_sound_seen("close_scare");
+	}
+	else if(distance_from_player <= (3 * SQUARE_SIZE.x))
+	{
+		check_and_play_sound_seen("medium_scare");
+	}
+	else 
+	{
+		check_and_play_sound_seen("far_scare");
+	}
 }

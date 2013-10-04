@@ -19,12 +19,12 @@
 class Room_Manager;
 class Game_Object;
 class Player;
+class Enemy;
 
 class Room
 {
 public:
-    Room(const Zeni::Point2f& position_, const Zeni::Vector2f& size_) : random_generator(Zeni::Random()), position(position_), size(size_), hasDoorNorth(false), hasDoorEast(false), hasDoorSouth(false), hasDoorWest(false)
-    {};
+    Room(const Zeni::Point2f& position_, const Zeni::Vector2f& size_);
     
 	virtual Zeni::Point2f getRealPosition() const;
     virtual inline const Zeni::Point2f& getPosition() const {return position;};
@@ -51,6 +51,11 @@ public:
                 delete square;
             }
         }
+
+		for(Game_Object* object : objects)
+		{
+			delete object;
+		}
     };
 	
 	//Allow Room_Manager to manipulate rooms
@@ -59,7 +64,20 @@ public:
 protected:
 	Zeni::Random random_generator;
 
-    void setSquares(const std::vector<std::vector<Square*> >& squares_) {squares = squares_;};
+    void setSquares(const std::vector<std::vector<Square*> >& squares_) {
+		squares = squares_;
+		
+		for(Game_Object* object : objects)
+		{
+			if(object && squares.size())
+			{
+				object->setSquare(squares[0][0]);
+				squares[0][0]->addObject(object);
+			}
+		}
+
+		randomizeEnemies();
+	};
     inline void addDoor(Door* door_) {doors.push_back(door_);};
 
 	std::vector<std::vector<Square*> > squares;
@@ -83,6 +101,8 @@ private:
     Zeni::Vector2f size;
     std::vector<Game_Object*> objects;
     std::vector<Door*> doors;
+
+	Enemy* randomEnemy();
 };
 
 #endif /* defined(__game__Room__) */
