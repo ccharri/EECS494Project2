@@ -14,12 +14,11 @@
 #include <vector>
 
 #include "Cursor.h"
-#include "Player.h"
 #include "Statue.h"
-#include "Ghost.h"
 #include "Pathfinding.h"
 #include "cheats.h"
 
+class Player;
 class Room_Manager;
 class Room;
 

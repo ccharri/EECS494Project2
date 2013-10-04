@@ -20,7 +20,7 @@ public:
            const Zeni::Vector2f &size_ = Zeni::Vector2f(32, 32),
            const float &theta_ = 0.0f,
            const float &speed_ = 0.0f,
-           const bool &pathable_ = false) : Game_Object(position_, size_, theta_, speed_, pathable_), seen_threshold(4), heard_threshold(0), seen_last_frame(false)
+           const bool &pathable_ = false) : Game_Object(position_, size_, theta_, speed_, pathable_), seen_threshold(0), heard_threshold(0), seen_last_frame(false)
     {};
     
     virtual void doLogic(float timestep, Game_Object* player);

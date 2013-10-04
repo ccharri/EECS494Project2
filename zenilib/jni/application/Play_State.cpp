@@ -10,9 +10,9 @@
 
 #include <math.h>
 
+#include "Player.h"
 #include "Room.h"
 #include "Room_Manager.h"
-#
 
 using namespace Zeni;
 using namespace std;
@@ -187,7 +187,12 @@ void Play_State::perform_logic() {
 //        Room* playerRoom = player.getSquare()->getRoom();
 //        
 //        vector<Game_Object*> roomObjects = playerRoom->getObjects();
-//        
+
+		if(playerSquare->getRoom() != newPlayerSquare->getRoom())
+		{
+			newPlayerSquare->getRoom()->randomizeEnemies();
+		}
+
         for(Game_Object* object : roomObjects)
         {
             if(dynamic_cast<Enemy*>(object))

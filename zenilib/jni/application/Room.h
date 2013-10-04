@@ -51,11 +51,6 @@ public:
                 delete square;
             }
         }
-
-		for(Game_Object* object : objects)
-		{
-			delete object;
-		}
     };
 	
 	//Allow Room_Manager to manipulate rooms
@@ -67,15 +62,6 @@ protected:
     void setSquares(const std::vector<std::vector<Square*> >& squares_) {
 		squares = squares_;
 		
-		for(Game_Object* object : objects)
-		{
-			if(object && squares.size())
-			{
-				object->setSquare(squares[0][0]);
-				squares[0][0]->addObject(object);
-			}
-		}
-
 		randomizeEnemies();
 	};
     inline void addDoor(Door* door_) {doors.push_back(door_);};
