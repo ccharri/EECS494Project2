@@ -69,31 +69,12 @@ void Game_Object::doMovement(float timestep)
             return;
         }
         
-        //Claim the square we're moving into
-        square->removeObject(this);
-        destination->addObject(this);
-        
-        if(destination->getRoom() != square->getRoom())
-        {
-            square->getRoom()->removeObject(this);
-            destination->getRoom()->addObject(this);
-        }
-        
-        Point2f destinationPos = destination -> getRealPosition();
-        Point2f ownSquarePos = square->getRealPosition();
-        Point2f ownPos = ownSquarePos;
-        
-        m_position = ownPos - destinationPos;
-        
-        square = destination;
-        path.erase(path.begin());
-        
     }
 
     //If moving, do so
     if(isMoving())
     {
-        Point2f ownSquarePos = square->getRealPosition();
+        Point2f ownSquarePos = destination->getRealPosition();
         Point2f ownPos = getRealPosition();
         
         float distance_x = ownSquarePos.x - ownPos.x;
@@ -114,6 +95,49 @@ void Game_Object::doMovement(float timestep)
             //Move closer
             
             m_position = m_position + (direction * (m_speed * timestep));
+        }
+        
+        if(destination && square && destination != square && (square->getRealPosition() - getRealPosition()).magnitude() > SQUARE_SIZE.x/2.)
+        {
+            if(destination->isPathable())
+            {
+                //Claim the square we're moving into
+                square->removeObject(this);
+                destination->addObject(this);
+                
+                if(destination->getRoom() != square->getRoom())
+                {
+                    square->getRoom()->removeObject(this);
+                    destination->getRoom()->addObject(this);
+                }
+                
+                square = destination;
+                auto it = path.begin();
+                if(it != path.end())
+                    path.erase(it);
+                
+                Point2f newPos = m_position;
+                
+                if(newPos.x <= -SQUARE_SIZE.x/2.) newPos.x = SQUARE_SIZE.x + newPos.x;
+                if(newPos.x >= SQUARE_SIZE.x/2.) newPos.x = newPos.x - SQUARE_SIZE.x;
+                if(newPos.y <= -SQUARE_SIZE.y/2.) newPos.y = SQUARE_SIZE.y + newPos.y;
+                if(newPos.y >= SQUARE_SIZE.y/2.) newPos.y = newPos.y - SQUARE_SIZE.y;
+                
+                m_position = newPos;
+            }
+            else {
+                destination = square;
+                path.clear();
+                
+                Point2f newPos = m_position;
+                
+                if(newPos.x <= -SQUARE_SIZE.x/2.) newPos.x = -newPos.x + SQUARE_SIZE.x;
+                if(newPos.x >= SQUARE_SIZE.x/2.) newPos.x = -newPos.x + SQUARE_SIZE.x;
+                if(newPos.y <= -SQUARE_SIZE.y/2.) newPos.y = -newPos.y + SQUARE_SIZE.y;
+                if(newPos.y >= SQUARE_SIZE.y/2.) newPos.y = -newPos.y + SQUARE_SIZE.y;
+                
+                m_position = newPos;
+            }
         }
     }
 }
