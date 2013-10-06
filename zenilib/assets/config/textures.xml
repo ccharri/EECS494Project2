@@ -45,6 +45,10 @@ The following things are unsupported:
         <filepath>textures/wall.png</filepath>
         <tile>1</tile>
     </wall>
+    <door>
+        <filepath>textures/door.png</filepath>
+        <tile>1</tile>
+    </door>
     <player>
         <filepath>textures/player.png</filepath>
         <tile>0</tile>

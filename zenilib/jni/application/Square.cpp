@@ -53,6 +53,11 @@ void Square::removeObject(Game_Object* object_)
 void Square::render(Player* player) const
 {
     if(!isVisible() && !see_all) return;
+    if((!getNorth() || !getNorth()->isPathable()) &&
+       (!getEast() || !getEast()->isPathable()) &&
+       (!getSouth() || !getSouth()->isPathable()) &&
+       (!getWest() || !getWest()->isPathable()))
+        return;
     
     Point2f startPos = getRealPosition();
     Point2f endPos = Point2f(startPos.x + size.x, startPos.y + size.y);

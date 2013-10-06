@@ -39,9 +39,19 @@ private:
 
     fr.render_text(
                    "Use WASD to move.",
-                   Point2f(400.0f, 300.0f - 0.5f * fr.get_text_height()),
+                   Point2f(400.0f, 300.0f - 1.f * fr.get_text_height()),
                    get_Colors()["title_text"],
                    ZENI_CENTER);
+    fr.render_text(
+                   "Use the mouse to look.",
+                   Point2f(400.0f, 300.0f + 0.0f * fr.get_text_height()),
+                   get_Colors()["title_text"],
+                   ZENI_CENTER);
+      fr.render_text(
+                     "Search for the exit.",
+                     Point2f(400.0f, 300.0f + 1.f * fr.get_text_height()),
+                     get_Colors()["title_text"],
+                     ZENI_CENTER);
   }
 };
 

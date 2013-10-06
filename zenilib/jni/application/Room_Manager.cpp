@@ -137,6 +137,7 @@ Room* Room_Manager::randomRoom(Zeni::Point2f position_, Zeni::Vector2f size_)
 	}
 	else {
 		assert(inRange(random, 0, 100));
+        return nullptr;
 	}
 }
 

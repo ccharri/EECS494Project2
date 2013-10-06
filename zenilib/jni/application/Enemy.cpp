@@ -22,8 +22,8 @@ void Enemy::render(const String &texture, const Zeni::Color &filter) const
 
 void Enemy::doLogic(float timestep, Game_Object* player)
 {
-	seen_last_frame = square->isVisible();
-
+    seen_last_frame = square->isVisible();
+    
     Game_Object::doLogic(timestep, player);
 
 	if(square->isVisible()) last_seen_timer.stop();
@@ -33,6 +33,7 @@ void Enemy::doLogic(float timestep, Game_Object* player)
     Point2f playerPos = player->getRealPosition();
     Point2f selfPos = getRealPosition();
     setTheta(atan2(playerPos.x - selfPos.x, playerPos.y - selfPos.y) - Global::pi_over_two);
+    
 }
 
 void Enemy::check_and_play_sound_seen(const Zeni::String& name)

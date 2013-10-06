@@ -29,15 +29,17 @@ void Statue::doLogic(float timestep, Game_Object* player)
     
 	bool seen = seen_last_frame;
 
-    if(!getSquare()->isVisible())
+    if(!square->isVisible())
         Enemy::doLogic(timestep, player);
+    else
+        seen_last_frame = square->isVisible();
 
 	if(isMoving() && !square->isVisible())
 	{
 		check_and_play_sound_move("stone_slide");
 	}
 
-	bool should_play_visibility_sound = !seen_last_frame && square->isVisible();
+	bool should_play_visibility_sound = !seen && square->isVisible();
 	float distance_from_player = Vector2f(player->getRealPosition() - getRealPosition()).magnitude();
 
 	if(!should_play_visibility_sound) return;

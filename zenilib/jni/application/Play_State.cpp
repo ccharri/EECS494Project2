@@ -152,11 +152,8 @@ void Play_State::perform_logic() {
     {
         if(m_end_timer.seconds() > 3.0f)
         {
+            see_all = false;
             get_Game().pop_state();
-        }
-        else
-        {
-            return;
         }
     }
     
@@ -178,6 +175,7 @@ void Play_State::perform_logic() {
 		if(playerSquare->getRoom() != newPlayerSquare->getRoom())
 		{
 			newPlayerSquare->getRoom()->randomizeEnemies(player);
+            play_sound("door_close");
 		}
 
         for(Game_Object* object : player->getSquare()->getRoom()->getObjects())
@@ -224,7 +222,11 @@ void Play_State::do_player_movement(float time_step)
 
 void Play_State::end_game(bool loss)
 {
-    m_chrono.stop();
-    play_sound("loss");
-    m_end_timer.start();
+    if(loss && ~no_die)
+    {
+        m_chrono.stop();
+        play_sound("loss");
+        m_end_timer.start();
+        see_all = true;
+    }
 }

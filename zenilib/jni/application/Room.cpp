@@ -53,7 +53,7 @@ void Room::randomizeEnemies(Player* player_)
             
 			Square* square = squares[x][y];
 			if(!square->isPathable()) continue;
-            if(Vector2f(player_->getRealPosition() - square->getRealPosition()).magnitude() < 2.f) continue;
+            if(Vector2f(player_->getRealPosition() - square->getRealPosition()).magnitude() < 4*SQUARE_SIZE.x) continue;
             
 			Square* oldsquare = object->getSquare();
 			if(oldsquare)
@@ -150,7 +150,7 @@ Door* Room::addDoorNorth()
 
 	if(hasDoorNorth) return static_cast<Door*>(squares[location.x][location.y]);
 
-	Door* newDoor = new Door(this, location);
+	Door* newDoor = new Door(this, location, -Global::pi_over_two);
 	Square* oldSquare = squares[location.x][location.y];
 	newDoor->replaceConnections(oldSquare);
 	delete oldSquare;
@@ -165,7 +165,7 @@ Door* Room::addDoorEast()
 
 	if(hasDoorEast) return static_cast<Door*>(squares[location.x][location.y]);
 
-	Door* newDoor = new Door(this, location);
+	Door* newDoor = new Door(this, location, 0);
 	Square* oldSquare = squares[location.x][location.y];
 	newDoor->replaceConnections(oldSquare);
 	delete oldSquare;
@@ -180,7 +180,7 @@ Door* Room::addDoorSouth()
 
 	if(hasDoorSouth) return static_cast<Door*>(squares[location.x][location.y]);
 
-	Door* newDoor = new Door(this, location);
+	Door* newDoor = new Door(this, location, Global::pi_over_two);
 	Square* oldSquare = squares[location.x][location.y];
 	newDoor->replaceConnections(oldSquare);
 	delete oldSquare;
@@ -195,7 +195,7 @@ Door* Room::addDoorWest()
 
 	if(hasDoorWest) return static_cast<Door*>(squares[location.x][location.y]);
 
-	Door* newDoor = new Door(this, location);
+	Door* newDoor = new Door(this, location, Global::pi);
 	Square* oldSquare = squares[location.x][location.y];
 	newDoor->replaceConnections(oldSquare);
 	delete oldSquare;
