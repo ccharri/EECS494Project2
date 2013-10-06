@@ -222,7 +222,7 @@ void Play_State::do_player_movement(float time_step)
 
 void Play_State::end_game(bool loss)
 {
-    if(loss && ~no_die)
+    if(loss && !no_die)
     {
         m_chrono.stop();
         play_sound("loss");

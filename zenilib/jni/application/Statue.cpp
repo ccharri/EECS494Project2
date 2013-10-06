@@ -10,6 +10,7 @@
 
 #include <math.h>
 
+#include "cheats.h"
 #include "Square.h"
 
 using namespace Zeni;
@@ -29,7 +30,7 @@ void Statue::doLogic(float timestep, Game_Object* player)
     
 	bool seen = seen_last_frame;
 
-    if(!square->isVisible())
+    if(always_use_enemy_logic || !square->isVisible())
         Enemy::doLogic(timestep, player);
     else
         seen_last_frame = square->isVisible();

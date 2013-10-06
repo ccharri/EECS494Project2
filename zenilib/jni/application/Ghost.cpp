@@ -10,6 +10,7 @@
 
 #include <math.h>
 
+#include "cheats.h"
 #include "Square.h"
 
 using namespace Zeni;
@@ -19,7 +20,7 @@ void Ghost::render() const
 {
     if(!square) return;
     
-    if(!getSquare()->isVisible())
+    if(see_all || !getSquare()->isVisible())
         Enemy::render("ghost");
 }
 
@@ -27,6 +28,6 @@ void Ghost::doLogic(float timestep, Game_Object* player)
 {
     if(!square) return;
     
-    if(!getSquare()->isVisible())
+    if(always_use_enemy_logic || !getSquare()->isVisible())
         Enemy::doLogic(timestep, player);
 }

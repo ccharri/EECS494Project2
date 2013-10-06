@@ -46,6 +46,8 @@ vector<Square*> AStar(Square* start_, Square* destination_)
         {
             vector<Square*> return_list;
             reconstruct_path(from_map, destination_, return_list);
+            auto start = find(return_list.begin(), return_list.end(), start_);
+            if(start != return_list.end()) return_list.erase(start);
             return return_list;
         }
         
