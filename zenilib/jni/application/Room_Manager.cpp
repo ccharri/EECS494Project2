@@ -186,6 +186,74 @@ void Room_Manager::generateRoom(Vector2f size_)
 	newRoom = randomRoom(newPos, size_);
 	linkRooms(newRoom, room, dir);
 	rooms.push_back(newRoom);
+    
+    Point2f checkPos;
+    
+    for(int dir = 0; dir < 4; ++dir)
+    {
+        Room* linkRoom;
+        bool link;
+        
+        switch(dir)
+        {
+            case 0: //North
+			{
+				checkPos = Point2f(newPos.x, newPos.y -1);
+				if(!(linkRoom = roomAtPosition(checkPos))) continue;
+				if(!newRoom->canAddDoorNorth()) continue;
+                if(!linkRoom->canAddDoorSouth()) continue;
+                
+                if((link = random_generator.rand_lt(3) == 0))
+                {
+                    linkRooms(linkRoom, newRoom, dir);
+                }
+                
+				break;
+			}
+            case 1: //East
+			{
+				checkPos = Point2f(newPos.x +1, newPos.y);
+				if(!(linkRoom = roomAtPosition(checkPos))) continue;
+				if(!newRoom->canAddDoorEast()) continue;
+                if(!linkRoom->canAddDoorWest()) continue;
+                
+                if((link = random_generator.rand_lt(3) == 0))
+                {
+                    linkRooms(linkRoom, newRoom, dir);
+                }
+                
+				break;
+			}
+            case 2: //South
+            {
+                checkPos = Point2f(newPos.x, newPos.y + 1);
+				if(!(linkRoom = roomAtPosition(checkPos))) continue;
+                if(!newRoom->canAddDoorSouth()) continue;
+                if(!linkRoom->canAddDoorNorth()) continue;
+                
+                if((link = random_generator.rand_lt(3) == 0))
+                {
+                    linkRooms(linkRoom, newRoom, dir);
+                }
+                
+                break;
+            }
+            case 3: //West
+            {
+                checkPos = Point2f(newPos.x -1, newPos.y);
+				if(!(linkRoom = roomAtPosition(checkPos))) continue;
+                if(!newRoom->canAddDoorWest()) continue;
+                if(!linkRoom->canAddDoorEast()) continue;
+                
+                if((link = random_generator.rand_lt(3) == 0))
+                {
+                    linkRooms(linkRoom, newRoom, dir);
+                }
+                
+                break;
+            }
+        }
+    }
 }
 
 bool Room_Manager::findAndCreateEndRoom(Zeni::Vector2f size_, float min_distance_)
