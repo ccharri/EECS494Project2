@@ -27,6 +27,8 @@ public:
     
     ~Enemy() {};
     
+    virtual void stopMovement();
+    
     inline bool isEnemy() const {return true;};
     
 protected:

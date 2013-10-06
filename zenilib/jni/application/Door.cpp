@@ -63,7 +63,7 @@ void Door::render(Player* player_) const
     Point2f endPos = Point2f(startPos.x + size.x, startPos.y + size.y);
     
     Point2f playerPos = player_->getRealPosition();
-    float alpha = see_all ? 0.0 : (Vector2f(playerPos.x - startPos.x, playerPos.y - startPos.y).magnitude() / (player_->getLightDist() * size.x) - .2);
+    float alpha = see_all || player_->getSquare() == this ? 0.0 : (Vector2f(playerPos.x - startPos.x, playerPos.y - startPos.y).magnitude() / (player_->getLightDist() * size.x) - .2);
     Color fadeout = Color(alpha, 0, 0, 0);
     
 	Vertex2f_Color ul(startPos, fadeout);

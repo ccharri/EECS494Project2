@@ -36,6 +36,13 @@ void Enemy::doLogic(float timestep, Game_Object* player)
     
 }
 
+void Enemy::stopMovement()
+{
+    seen_threshold = 0;
+    heard_threshold = 0;
+    Game_Object::stopMovement();
+}
+
 void Enemy::check_and_play_sound_seen(const Zeni::String& name)
 {
 	if(last_seen_timer.seconds() >= seen_threshold)

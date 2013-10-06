@@ -13,6 +13,7 @@
 #include "Player.h"
 #include "Room.h"
 #include "Room_Manager.h"
+#include "Square_End.h"
 
 using namespace Zeni;
 using namespace std;
@@ -23,7 +24,7 @@ Play_State::Play_State() :  m_time_passed(0.0), screenSize(Point2f(800, 600.0f))
 {
     set_pausable(true);
 
-	room_manager = new Room_Manager(9, 5);
+	room_manager = new Room_Manager(9, 4);
     
 	player = room_manager->getPlayer();
     
@@ -134,6 +135,14 @@ void Play_State::perform_logic() {
 
     m_projector = Projector2D(make_pair(player->getRealPosition() - .5 * screenSize, player->getRealPosition() + .5 * screenSize), get_Video().get_viewport());
     
+    if(dynamic_cast<Square_End*>(player->getSquare()))
+    {
+        if(!m_end_timer.is_running())
+        {
+            end_game(false);
+        }
+    }
+    
     for(Game_Object* object : player->getSquare()->getRoom()->getObjects())
     {
         if(object && object->isEnemy() && object->getSquare())
@@ -228,5 +237,16 @@ void Play_State::end_game(bool loss)
         play_sound("loss");
         m_end_timer.start();
         see_all = true;
+    }
+    else if(!loss)
+    {
+        m_chrono.stop();
+        m_end_timer.start();
+        see_all = true;
+    }
+    else
+    {
+        //Critical system error!
+        assert(false);
     }
 }
