@@ -75,5 +75,7 @@ Room_Square_Filled::Room_Square_Filled(const Point2f position_, const Vector2f s
 	}
 
 	setSquares(squares);
+    
+    Room::createEnemies();
 };
 

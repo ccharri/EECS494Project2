@@ -25,24 +25,6 @@ using namespace std;
 
 Room::Room(const Zeni::Point2f& position_, const Zeni::Vector2f& size_) : random_generator(Zeni::Random()), position(position_), size(size_), hasDoorNorth(false), hasDoorEast(false), hasDoorSouth(false), hasDoorWest(false)
 {
-	int random = random_generator.rand_lt(100);
-
-	if((random >= 0)  && (random < 15))
-	{
-		addObject(randomEnemy());
-		addObject(randomEnemy());
-	}
-	else if((random >= 15)  && (random < 80))
-	{
-		addObject(randomEnemy());
-	}
-	else if((random >= 80)  && (random < 100))
-	{
-		//Relax, you're safe!
-	}
-	else {
-		assert ((random >= 0) && (random < 100));
-	}
 };
 
 Point2f Room::getRealPosition() const
@@ -128,7 +110,21 @@ void Room::doLogic(float timestep, Player* player)
             float angleMin = playerAngle - arc/2.;
             float angleMax = playerAngle + arc/2.;
             float angle = atan2((squarePos.y - playerPos.y),(squarePos.x - playerPos.x));
-            bool inAngle = (angle >= angleMin) && (angle <= angleMax);
+            
+            bool inAngle = false;
+            
+            if(angleMin <= -Global::pi)
+            {
+                inAngle = (angle <= angleMax) || (angle >= (angleMin += 2*Global::pi));
+            }
+            else if (angleMax >= Global::pi)
+            {
+                inAngle = (angle >= angleMin) || (angle <= (angleMax -= 2*Global::pi));
+            }
+            else
+            {
+                inAngle = (angle >= angleMin) && (angle <= angleMax);
+            }
             
             if(see_all ||( (player->isLightOn()) && !(square == player->getSquare()) && ((distance <= (player->getLightDist() * player->getSquare()->getSize().x)) && (inAngle))))
             {
@@ -212,7 +208,7 @@ Enemy* Room::randomEnemy()
 {
 	int random = random_generator.rand_lt(100);
 
-	if((random >= 0) && (random < 60))
+	if((random >= 0) && (random < 70))
 	{
 		return new Statue(Point2f(0,0));
 	}
@@ -223,6 +219,37 @@ Enemy* Room::randomEnemy()
 	else
 	{
 		assert((random >= 0) && (random < 100));
+        return nullptr;
 	}
+}
 
+void Room::createEnemies()
+{
+    int random = random_generator.rand_lt(100);
+    
+	if((random >= 0)  && (random < 15))
+	{
+        Enemy* enemy1 = randomEnemy();
+        squares[0][0]->addObject(enemy1);
+        enemy1->setSquare(squares[0][0]);
+		addObject(enemy1);
+        Enemy* enemy2 = randomEnemy();
+        squares[0][0]->addObject(enemy2);
+        enemy2->setSquare(squares[0][0]);
+		addObject(enemy2);
+	}
+	else if((random >= 15)  && (random < 80))
+	{
+        Enemy* enemy1 = randomEnemy();
+        squares[0][0]->addObject(enemy1);
+        enemy1->setSquare(squares[0][0]);
+		addObject(enemy1);
+	}
+	else if((random >= 80)  && (random < 100))
+	{
+		//Relax, you're safe!
+	}
+	else {
+		assert ((random >= 0) && (random < 100));
+	}
 }

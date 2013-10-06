@@ -58,6 +58,8 @@ Room_Hall::Room_Hall(const Point2f position_, const Vector2f size_)
 	}
 
 	setSquares(squares);
+    
+    Room::createEnemies();
 };
 
 Door* Room_Hall::addDoorNorth() 

@@ -82,6 +82,8 @@ protected:
     
     std::vector<Game_Object*> objects;
     
+    void createEnemies();
+    
 private:
     Zeni::Point2f position;
     Zeni::Vector2f size;
