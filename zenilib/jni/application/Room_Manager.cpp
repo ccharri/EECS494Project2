@@ -265,6 +265,8 @@ bool Room_Manager::findAndCreateEndRoom(Zeni::Vector2f size_, float min_distance
 	int dir;
 
 	for_each(rooms.begin(), rooms.end(), [&](Room* room){
+        if(validPlacement) return true;
+        
 		Vector2f pos = room->getPosition();
 
 		for(int i = 0; (i < 4) && !validPlacement; ++i)
@@ -313,9 +315,11 @@ bool Room_Manager::findAndCreateEndRoom(Zeni::Vector2f size_, float min_distance
 			rooms.push_back(finalRoom);
 			return true;
 		}
+        
+        return false;
 	});
 
-	return false;
+	return validPlacement;
 }
 
 bool inRange(int x, int min, int max)
