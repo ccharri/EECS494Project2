@@ -10,6 +10,7 @@
 
 #include <math.h>
 
+#include "cheats.h"
 #include "End_Gamestate.h"
 #include "Player.h"
 #include "Room.h"
@@ -19,14 +20,14 @@
 using namespace Zeni;
 using namespace std;
 
-Play_State::Play_State() :  m_time_passed(0.0), screenSize(Point2f(800, 600.0f)),   
+Play_State::Play_State(const int minRooms_, const float minDistance_) :  m_time_passed(0.0), screenSize(Point2f(800, 600.0f)),   
 							cursor(Cursor()),
                             loss(true),
 							m_north(false), m_south(false), m_west(false), m_east(false)
 {
     set_pausable(true);
 
-	room_manager = new Room_Manager(9, 4);
+	room_manager = new Room_Manager(minRooms_, minDistance_);
     
 	player = room_manager->getPlayer();
     

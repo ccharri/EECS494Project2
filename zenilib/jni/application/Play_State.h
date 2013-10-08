@@ -16,7 +16,6 @@
 #include "Cursor.h"
 #include "Statue.h"
 #include "Pathfinding.h"
-#include "cheats.h"
 
 class Player;
 class Room_Manager;
@@ -27,7 +26,7 @@ class Play_State : public Zeni::Gamestate_Base {
     Play_State operator=(const Play_State &);
     
 public:
-    Play_State();
+    Play_State(const int minRooms_, const float minDistance_);
     ~Play_State();
     
 private:

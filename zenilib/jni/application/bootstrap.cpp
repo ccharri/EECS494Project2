@@ -6,7 +6,7 @@
 
 #include <zenilib.h>
 
-#include "Play_State.h"
+#include "Config_State.h"
 
 #if defined(_DEBUG) && defined(_WINDOWS)
 #define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
@@ -72,7 +72,7 @@ class Bootstrap {
       Sound::get().set_BGM_looping(true);
       Sound::get().play_BGM();
 
-      return new Title_State<Play_State, Instructions_State>("Lights Out");
+      return new Title_State<Config_State, Instructions_State>("Lights Out");
     }
   } m_goi;
 
