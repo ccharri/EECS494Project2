@@ -86,8 +86,8 @@ private:
 
 		void on_accept()
 		{
+			Check_Box::on_accept();
 			*boolean = !(*boolean);
-			set_checked(*boolean);
 		}
 	private:
 		bool* boolean;
