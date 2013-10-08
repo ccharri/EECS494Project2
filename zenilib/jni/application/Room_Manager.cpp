@@ -264,8 +264,7 @@ bool Room_Manager::findAndCreateEndRoom(Zeni::Vector2f size_, float min_distance
 	Point2f newPos;
 	int dir;
 
-	for(Room* room :rooms)
-	{
+	for_each(rooms.begin(), rooms.end(), [&](Room* room){
 		Vector2f pos = room->getPosition();
 
 		for(int i = 0; (i < 4) && !validPlacement; ++i)
@@ -314,7 +313,7 @@ bool Room_Manager::findAndCreateEndRoom(Zeni::Vector2f size_, float min_distance
 			rooms.push_back(finalRoom);
 			return true;
 		}
-	}
+	});
 
 	return false;
 }

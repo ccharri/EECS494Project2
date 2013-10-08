@@ -70,30 +70,25 @@ void Room::randomizeEnemies(Player* player_)
 
 void Room::render(Player* player) const
 {
-    for(vector<Square*> vector : squares)
-    {
-        for(Square* square : vector)
-        {
+	for_each(squares.begin(), squares.end(), [&](vector<Square*> column) {
+		for_each(column.begin(), column.end(), [&](Square* square) {
             square->render(player);
-        }
-    }
+        });
+    });
     
-    for(Game_Object* object : objects)
-    {
-        if(!object->getSquare()) continue;
+	for_each(objects.begin(), objects.end(), [&](Game_Object* object){
+        if(!object->getSquare()) return;
            
         object->render();
-    }
+    });
 }
 
 
 
 void Room::doLogic(float timestep, Player* player)
 {
-    for(vector<Square*> vector : squares)
-    {
-        for(Square* square : vector)
-        {
+	for_each(squares.begin(), squares.end(), [&](vector<Square*> column) {
+		for_each(column.begin(), column.end(), [&](Square* square) {
             square->doLogic(timestep);
 
             Point2f squarePos = square->getRealPosition();
@@ -133,15 +128,15 @@ void Room::doLogic(float timestep, Player* player)
             else {
                 square->setVisible(false);
             }
-        }
-    }
+        });
+    });
     
-	for(Game_Object* object : objects)
+	for_each(objects.begin(), objects.end(), [&](Game_Object* object)
 	{
-        if(!object->getSquare()) continue;
+        if(!object->getSquare()) return;
         
 		object->doLogic(timestep, player);
-	}
+	});
 }
 
 Door* Room::addDoorNorth() 

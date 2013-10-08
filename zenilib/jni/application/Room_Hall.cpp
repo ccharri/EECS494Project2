@@ -1,6 +1,8 @@
 
 #include "Room_Hall.h"
 
+#include <algorithm>
+
 #include "Room.h"
 
 using namespace std;
@@ -68,20 +70,18 @@ Door* Room_Hall::addDoorNorth()
 
 	if(hasDoorNorth) return static_cast<Door*>(squares[location.x][location.y]);
 
-	for(vector<Square*> column : squares)
-	{
-		for(Square* square : column)
-		{
+	for_each(squares.begin(), squares.end(), [&](vector<Square*> column) {
+		for_each(column.begin(), column.end(), [&](Square* square) {
 			Point2f pos = square->getPosition();
 
-			if((pos.y == 0) || (pos.y > ((getSize().y-1)/2.))) continue;
+			if((pos.y == 0) || (pos.y > ((getSize().y-1)/2.))) return;
 
 			if((pos.x >= (((getSize().x-1)/2.) -1)) && (pos.x <= (((getSize().x-1)/2.) +1)))
 			{
 				square->setPathable(true);
 			}
-		}
-	}
+		});
+	});
 
 	return Room::addDoorNorth();
 }
@@ -92,20 +92,18 @@ Door* Room_Hall::addDoorEast()
 
 	if(hasDoorEast) return static_cast<Door*>(squares[location.x][location.y]);
 
-	for(vector<Square*> column : squares)
-	{
-		for(Square* square : column)
-		{
+	for_each(squares.begin(), squares.end(), [&](vector<Square*> column) {
+		for_each(column.begin(), column.end(), [&](Square* square) {
 			Point2f pos = square->getPosition();
 
-			if((pos.x == (getSize().x-1)) || (pos.x < (((getSize().x-1)/2.) + 1))) continue;
+			if((pos.x == (getSize().x-1)) || (pos.x < (((getSize().x-1)/2.) + 1))) return;
 
 			if((pos.y >= (((getSize().y-1)/2.) -1)) && (pos.y <= (((getSize().y-1)/2.) +1)))
 			{
 				square->setPathable(true);
 			}
-		}
-	}
+		});
+	});
 
 	return Room::addDoorEast();
 }
@@ -116,20 +114,18 @@ Door* Room_Hall::addDoorSouth()
 
 	if(hasDoorSouth) return static_cast<Door*>(squares[location.x][location.y]);
 
-	for(vector<Square*> column : squares)
-	{
-		for(Square* square : column)
-		{
+	for_each(squares.begin(), squares.end(), [&](vector<Square*> column) {
+		for_each(column.begin(), column.end(), [&](Square* square) {
 			Point2f pos = square->getPosition();
 
-			if((pos.y == (getSize().y-1)) || (pos.y < ((getSize().y+1)/2.))) continue;
+			if((pos.y == (getSize().y-1)) || (pos.y < ((getSize().y+1)/2.))) return;
 
 			if((pos.x >= (((getSize().x-1)/2.) -1)) && (pos.x <= (((getSize().x-1)/2.) +1)))
 			{
 				square->setPathable(true);
 			}
-		}
-	}
+		});
+	});
 
 	return Room::addDoorSouth();
 }
@@ -140,20 +136,18 @@ Door* Room_Hall::addDoorWest()
 
 	if(hasDoorWest) return static_cast<Door*>(squares[location.x][location.y]);
 
-	for(vector<Square*> column : squares)
-	{
-		for(Square* square : column)
-		{
+	for_each(squares.begin(), squares.end(), [&](vector<Square*> column) {
+		for_each(column.begin(), column.end(), [&](Square* square) {
 			Point2f pos = square->getPosition();
 
-			if((pos.x == 0) || (pos.x > ((getSize().x-1)/2.))) continue;
+			if((pos.x == 0) || (pos.x > ((getSize().x-1)/2.))) return;
 
 			if((pos.y >= (((getSize().y-1)/2.) -1)) && (pos.y <= (((getSize().y-1)/2.) +1)))
 			{
 				square->setPathable(true);
 			}
-		}
-	}
+		});
+	});
 
 	return Room::addDoorWest();
 }

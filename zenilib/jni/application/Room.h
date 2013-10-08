@@ -12,6 +12,7 @@
 #include <zenilib.h>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #include "Square.h"
 #include "Door.h"
@@ -44,13 +45,11 @@ public:
     virtual void doLogic(float timestep, Player* player);
     
     virtual ~Room() {
-        for(std::vector<Square*> vector : squares)
-        {
-            for(Square* square : vector)
-            {
-                delete square;
-            }
-        }
+		for_each(squares.begin(), squares.end(), [&](std::vector<Square*> vector){
+			for_each(vector.begin(), vector.end(), [&](Square* square){
+				delete square;
+			});
+		});
     };
 	
 	//Allow Room_Manager to manipulate rooms
