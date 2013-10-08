@@ -18,6 +18,11 @@ void Player::render() const
 
 void Player::doLogic(float timestep, Game_Object* player)
 {
-    
+	bool wasMoving = isMoving();
     Game_Object::doLogic(timestep, player);
+
+	if(!wasMoving && isMoving())
+	{
+		play_sound("foot_step");
+	}
 }

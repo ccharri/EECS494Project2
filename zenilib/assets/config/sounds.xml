@@ -37,6 +37,9 @@ HOWTO:  To convert between types, or to downmix to mono,
   <medium_scare>
     <filepath>sfx/8923__patchen__big-stab</filepath>
   </medium_scare>
+  <foot_step>
+    <filepath>sfx/197778__samulis__footstep-on-stone</filepath>
+  </foot_step>
   <door_close>
     <filepath>sfx/Door_Close</filepath>
   </door_close>
