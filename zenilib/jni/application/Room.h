@@ -45,10 +45,14 @@ public:
     virtual void doLogic(float timestep, Player* player);
     
     virtual ~Room() {
-		for_each(squares.begin(), squares.end(), [&](std::vector<Square*> vector){
+		for_each(squares.begin(), squares.end(), [&](std::vector<Square*>& vector){
 			for_each(vector.begin(), vector.end(), [&](Square* square){
 				delete square;
 			});
+		});
+
+		for_each(objects.begin(), objects.end(), [&](Game_Object* object) {
+			delete object;
 		});
     };
 	
