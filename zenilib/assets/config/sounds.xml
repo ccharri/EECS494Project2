@@ -49,4 +49,10 @@ HOWTO:  To convert between types, or to downmix to mono,
   <loss>
     <filepath>sfx/65915__bristolstories__reverse-clang2_short</filepath>
   </loss>
+  <win>
+    <filepath>sfx/argitoth__10-11-15-gates-of-heaven_shortened</filepath>
+  </win>
+  <start>
+    <filepath>sfx/unfa__big-far-explosion_shortened</filepath>
+  </start>
 </Sounds>

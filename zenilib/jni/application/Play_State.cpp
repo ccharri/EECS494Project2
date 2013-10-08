@@ -36,6 +36,8 @@ Play_State::Play_State(const int minRooms_, const float minDistance_) :  m_time_
     vector<Game_Object*> roomObjects = playerRoom->getObjects();
     
     m_end_timer.stop();
+
+	play_sound("start");
 }
 
 Play_State::~Play_State()
@@ -255,6 +257,7 @@ void Play_State::end_game(bool loss_)
     else if(!loss)
     {
         m_chrono.stop();
+		play_sound("win");
         m_end_timer.start();
     }
     else

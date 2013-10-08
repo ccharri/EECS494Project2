@@ -47,3 +47,13 @@ Stone_Slide edited from 29991__thanvannispen__stone-on-stone-draggin5
 created by thanvannispen
 Creative Commons Attribution License
 freesound.org
+
+unfa__big-far-explosion-shortened
+created by unfa
+Creative Commons Attribution License
+freesound.org
+
+argitoth__10-11-15-gates-of-heaven_shortened
+created by Argitoth
+Creative Commons Attribution License
+freesound.org
