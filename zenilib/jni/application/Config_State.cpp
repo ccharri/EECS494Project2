@@ -39,13 +39,13 @@ void Config_State::render()
 		ZENI_CENTER);
 
 	//minRoom slider
-	detailfont.render_text("Minimum Number of Rooms: " + minRooms, 
+	detailfont.render_text(String("Minimum Number of Rooms: ") + itoa(currentRooms), 
 							Point2f(400, 200-detailfont.get_text_height()), 
 							get_Colors()["title_text"], 
 							ZENI_CENTER);
 
 	//minDistance slider
-	detailfont.render_text("Minimum Distance of End from Start: " + (int)minDistance, 
+	detailfont.render_text(String("Minimum Distance From Start To End: ") + itoa((int)currentDistance), 
 		Point2f(400,400 - detailfont.get_text_height()), 
 		get_Colors()["title_text"], 
 		ZENI_CENTER);

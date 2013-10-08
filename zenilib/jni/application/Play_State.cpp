@@ -111,11 +111,21 @@ void Play_State::on_mouse_motion(const SDL_MouseMotionEvent &event)
 
 void Play_State::render()
 {
-    get_Video().set_2d(make_pair(player->getRealPosition() - .5*screenSize, player->getRealPosition() + .5* screenSize), true);
+	Point2f screenStart = player->getRealPosition() - .5*screenSize;
+	Point2f screenEnd =  player->getRealPosition() + .5* screenSize;
+	
+    get_Video().set_2d(make_pair(screenStart, screenEnd), true);
     
 	if(see_all)
 	{
 		for_each(room_manager->getRooms().begin(), room_manager->getRooms().end(), [&](Room* room) {
+
+			Point2f roomPos = room->getRealPosition();
+			Point2f roomEnd = roomPos + SQUARE_SIZE.x * room->getSize();
+
+			if((roomEnd.x < screenStart.x) || (roomPos.x > screenEnd.x) ||
+				(roomEnd.y < screenStart.y) || (roomPos.y > screenEnd.y)) return;
+
 			room->render(player);
 		});
 	}
@@ -148,7 +158,7 @@ void Play_State::perform_logic() {
     {
         if(object && object->isEnemy() && object->getSquare())
         {
-            if(object->collide(*player))
+            if(object->collide(*player) && !no_die)
             {
 				if(!m_end_timer.is_running())
 				{
@@ -236,7 +246,7 @@ void Play_State::end_game(bool loss_)
     
     player->setLightDist(0);
     
-    if(loss && !no_die)
+    if(loss)
     {
         m_chrono.stop();
         play_sound("loss");

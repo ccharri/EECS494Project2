@@ -45,7 +45,7 @@ private:
 
 	class Back_Button : public Zeni::Text_Button {
 	public:
-		Back_Button() : Zeni::Text_Button(Zeni::Point2f(25, 725), Zeni::Point2f(75,775), "system_36_800x600", "Back") 
+		Back_Button() : Zeni::Text_Button(Zeni::Point2f(10, 725), Zeni::Point2f(90,775), "system_36_800x600", "Back") 
 		{
 		}
 
