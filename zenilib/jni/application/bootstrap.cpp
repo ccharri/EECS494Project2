@@ -39,17 +39,17 @@ private:
 
     fr.render_text(
                    "Use WASD to move.",
-                   Point2f(400.0f, 300.0f - 1.f * fr.get_text_height()),
+                   Point2f(400.0f, 300.0f - 1.5f * fr.get_text_height()),
                    get_Colors()["title_text"],
                    ZENI_CENTER);
     fr.render_text(
                    "Use the mouse to look.",
-                   Point2f(400.0f, 300.0f + 0.0f * fr.get_text_height()),
+                   Point2f(400.0f, 300.0f - 0.5f * fr.get_text_height()),
                    get_Colors()["title_text"],
                    ZENI_CENTER);
       fr.render_text(
                      "Search for the exit.",
-                     Point2f(400.0f, 300.0f + 1.f * fr.get_text_height()),
+                     Point2f(400.0f, 300.0f + .5f * fr.get_text_height()),
                      get_Colors()["title_text"],
                      ZENI_CENTER);
   }
@@ -66,6 +66,11 @@ class Bootstrap {
       get_Fonts();
       get_Sounds();
       get_Game().joy_mouse.enabled = true;
+        
+        
+      Sound::get().set_BGM("sfx/22698__dj-chronos__loop-2");
+      Sound::get().set_BGM_looping(true);
+      Sound::get().play_BGM();
 
       return new Title_State<Play_State, Instructions_State>("Lights Out");
     }

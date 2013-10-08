@@ -40,6 +40,8 @@ private:
     
     Zeni::Point2f screenSize;
     
+    bool loss;
+    
     void perform_logic();
     
     void on_push();
@@ -49,7 +51,7 @@ private:
     void on_mouse_motion(const SDL_MouseMotionEvent &event);
     
     void do_player_movement(float time_step);
-    void end_game(bool loss);
+    void end_game(bool loss_);
     
     Player* player;
     

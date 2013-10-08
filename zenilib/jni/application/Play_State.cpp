@@ -10,6 +10,7 @@
 
 #include <math.h>
 
+#include "End_Gamestate.h"
 #include "Player.h"
 #include "Room.h"
 #include "Room_Manager.h"
@@ -19,7 +20,8 @@ using namespace Zeni;
 using namespace std;
 
 Play_State::Play_State() :  m_time_passed(0.0), screenSize(Point2f(800, 600.0f)),   
-							cursor(Cursor()), 
+							cursor(Cursor()),
+                            loss(true),
 							m_north(false), m_south(false), m_west(false), m_east(false)
 {
     set_pausable(true);
@@ -33,10 +35,6 @@ Play_State::Play_State() :  m_time_passed(0.0), screenSize(Point2f(800, 600.0f))
     vector<Game_Object*> roomObjects = playerRoom->getObjects();
     
     m_end_timer.stop();
-
-    Sound::get().set_BGM("sfx/22698__dj-chronos__loop-2");
-    Sound::get().set_BGM_looping(true);
-    Sound::get().play_BGM();
 }
 
 Play_State::~Play_State()
@@ -137,7 +135,9 @@ void Play_State::perform_logic() {
     
     if(dynamic_cast<Square_End*>(player->getSquare()))
     {
-        if(!m_end_timer.is_running())
+        Point2f playerPos = player->getPosition();
+        
+        if(!m_end_timer.is_running() && ((playerPos.x == 0) && (playerPos.y == 0)))
         {
             end_game(false);
         }
@@ -161,11 +161,11 @@ void Play_State::perform_logic() {
     {
         if(m_end_timer.seconds() > 3.0f)
         {
-            see_all = false;
             get_Game().pop_state();
+            get_Game().push_state(Gamestate(new End_Gamestate(loss ? "You died!" : "You escaped!", 2.5, make_pair(Point2f(0,0), screenSize))));
+            return;
         }
     }
-    
     
     do_player_movement(time_step);
     
@@ -229,20 +229,22 @@ void Play_State::do_player_movement(float time_step)
     }
 }
 
-void Play_State::end_game(bool loss)
+void Play_State::end_game(bool loss_)
 {
+    loss = loss_;
+    
+    player->setLightDist(0);
+    
     if(loss && !no_die)
     {
         m_chrono.stop();
         play_sound("loss");
         m_end_timer.start();
-        see_all = true;
     }
     else if(!loss)
     {
         m_chrono.stop();
         m_end_timer.start();
-        see_all = true;
     }
     else
     {
